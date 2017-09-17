@@ -2,14 +2,10 @@
 
 $.require([
     'core!/server/socket/native/socket.js',
-    'core!/cert.js',
-    'node!tls',
-    'node!fs'
+    'node!tls'
 ], function(
     socket,
-    cert,
-    tls,
-    fs
+    tls
 ) {
 
     var obj = function(config) {
@@ -20,7 +16,7 @@ $.require([
         this._config = $.config.get('socket.' + config.name);
 
         var self = this;
-        $.all([
+        /*$.all([
             cert.public(this._config.ip),
             cert.private(this._config.ip),
             cert.client()
@@ -37,7 +33,7 @@ $.require([
                 ca: ca
             };
             self._start();
-        });
+        });*/
 
     };
 
