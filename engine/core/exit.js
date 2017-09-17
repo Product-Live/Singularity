@@ -18,11 +18,11 @@ $.require([
 		process.on('exit', function (code) {
 			self._exit(code);
 		}).on('SIGINT', function () {
-            $.console.info('Application close because of a SIGINT.');
+            console.log('Application close because of a SIGINT.');
 			self._closing += -1;
 			self._exit(2);
 		}).on('uncaughtException', function (e) {
-            $.console.fatal('The was a uncaught exception', e.stack);
+            console.log('The was a uncaught exception', e.stack);
 			self._closing += -1;
 			self._exit(99);
 		});
