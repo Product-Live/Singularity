@@ -44,6 +44,7 @@ obj.prototype = {
 					path: {
 						'project': appRoot.project,
 						'root': appRoot.engine,
+						'bootstrap': appRoot.project + '/bootstrap',
 						'engine': appRoot.engine + '/engine',
 						'base': appRoot.engine + '/engine/base',
 						'npm': appRoot.engine + '/engine/node_modules',
