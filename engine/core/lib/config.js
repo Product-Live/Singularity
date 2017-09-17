@@ -42,17 +42,24 @@ obj.prototype = {
 			this._config = {
 				require: {
 					path: {
-						'project': appRoot.project,
+						'node': '',
 						'root': appRoot.engine,
-						'bootstrap': appRoot.project + '/bootstrap',
+						'project': appRoot.project,
+						'config': appRoot.project + '/config.js',
 						'engine': appRoot.engine + '/engine',
 						'base': appRoot.engine + '/engine/base',
 						'npm': appRoot.engine + '/engine/node_modules',
-						'node': '',
 						'core': appRoot.engine + '/engine/core',
 						'lib': appRoot.engine + '/engine/core/lib',
+						'public': appRoot.project + '/public',
 						'hyperion': appRoot.engine + '/engine/core/hyperion',
-						'resources': appRoot.project + '/resources'
+						'hypeConfig': appRoot.project + '/resources/cache/hyperion/config',
+						'bootstrap': appRoot.project + '/bootstrap',
+						'app': appRoot.project + '',
+						'resources': appRoot.project + '/resources',
+						'keys': appRoot.project + '/resources/keys',
+						'assets': appRoot.project + '/resources/assets',
+						'cache': appRoot.project + '/resources/cache'
 					}
 				}
 			};
