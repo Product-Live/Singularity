@@ -50,7 +50,7 @@ obj.prototype = {
 						'node': '',
 						'core': appRoot.engine + '/engine/core',
 						'lib': appRoot.engine + '/engine/core/lib',
-						'hyperion': appRoot.engine + '/engine/core/docker/hyperion',
+						'hyperion': appRoot.engine + '/engine/core/hyperion',
 						'resources': appRoot.project + '/resources'
 					}
 				}
