@@ -47,15 +47,15 @@ $.require([
         },
 
         raw: function(files, output) {
-            var p = new $.promise(), code = $.key.plain();
+            var p = new $.promise(), code = $.key.plain(), self = this;
 
             if (!$.is.array(files) || !$.is.string(output)) {
                 throw new Error('input is wrong.');
             }
 
-            bash.run('java --version').then(function() {
+            bash.run('java -version').then(function(res) {
                 var err = res.err.join('');
-                if (res.err.length != 0 || err.match(/error/)) {
+                if (!err.match(/java\sversion\s".*"/)) {
                     p.reject(err);
                 } else {
                     return (true);
