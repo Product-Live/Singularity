@@ -1,5 +1,7 @@
 "use strict";
 
+process.stdout.write('\x1b[' + (90 + 7) + 'm');
+
 var util = {
     has: function(reg) {
         for (var i in process.argv) {

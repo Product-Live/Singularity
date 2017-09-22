@@ -2,6 +2,9 @@
 
 var fs = require('fs');
 
+var yellow = '\x1b[' + (90 + 3) + 'm'
+var none = '\x1b[' + (90 + 7) + 'm'
+
 var obj = function(config) {
     this._crypto = {
         algorithm: 'aes-256-ctr',
@@ -66,7 +69,9 @@ obj.prototype = {
                     return (json || {});
                 }
             }
-        } catch (e) {}
+        } catch (e) {
+            console.warn(yellow + 'failed to read keychain', e, none);
+        }
         return ({});
     }
 };
