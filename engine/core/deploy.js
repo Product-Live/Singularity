@@ -24,7 +24,7 @@ $.require([
     obj.prototype = $.extends('!base', {
         bash: function(cmd) {
             return (bash.raw(cmd, {cwd: $.path('root!')}, true).then(function(res) {
-                return ((res.out[0] || '').replace('\n', '').trim());
+                return ((res.err || []).join(' ') +  ' ' (res.out || []).join(' ')).trim();
             }, function(err) {
                 return (err);
             }));
@@ -32,7 +32,7 @@ $.require([
 
         version: function() {
             return (this.bash('lsb_release -a').then(function(res) {
-                var r = res.out.join(' ').split('\n'), out = {};
+                var r = res.split('\n'), out = {};
                 for (var i in r) {
                     var tmp = r[i].split(':\t');
                     if (tmp.length == 2) {
