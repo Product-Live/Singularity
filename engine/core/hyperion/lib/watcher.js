@@ -186,6 +186,7 @@ $.require([
             var self = this, report = {};
             cd = ($.is.function(cd)) ? cd : function() {};
 
+
             cd({info: 'fetch data for key "' + this._config.key + '"'});
             return (this.data.get(this._config.key).then(function(data) {
                 let tmp = data;
@@ -329,17 +330,23 @@ $.require([
 
                         if ($.defined(self._config.key) && self._config.autoSync) { // without the key run locally from memory
                             return (self.data.is().then(function() {
-                                return (self.syncMap());
+                                return (self.syncMap(function(msg) {
+                                    console.log(msg);
+                                }));
                             }, function() {
                                 self._config.runLocal = true;
-                                return (self.sync());
+                                return (self.sync(function(msg) {
+                                    console.log(msg);
+                                }));
                             }).then(function() {
                                 return (true);
                             }, function() {
                                 return (true);
                             }));
                         } else {
-                            return (self.sync().then(function() {
+                            return (self.sync(function(msg) {
+                                console.log(msg);
+                            }).then(function() {
                                 return (true);
                             }, function() {
                                 return (true);

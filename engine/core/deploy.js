@@ -14,7 +14,7 @@ $.require([
         '',
         '[Service]',
         'TimeoutStartSec=0',
-        'ExecStart=/usr/bin/node ' + appRoot.absolute + '/main.js --watcher --stdout',
+        'ExecStart=/usr/bin/node ' + appRoot.absolute + '/main.js --watcher --keychain ' + $.config.get('keychain') + ' --port 580 --stdout --docker hub',
         '',
         '[Install]',
         'WantedBy=multi-user.target'

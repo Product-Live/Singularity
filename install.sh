@@ -4,4 +4,4 @@ apt-get purge -y nodejs npm
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
 apt-get install -y nodejs
 
-node main.js --deploy ubuntu
+node main.js --deploy ubuntu --keychain change_this_to_password

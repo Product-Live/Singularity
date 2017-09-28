@@ -15,10 +15,13 @@ $.require([
         },
 
         get: function(original, key) {
+            var self = this;
             return $.file.read('resources!/hypeMap.json').then(function(res) {
                 var copy = $.schema.copy(original), data = config.create();
                 data.set(copy).set($.json.parse(res) || {});
                 return (data.get());
+            }, function(e) {
+               return (self.set(key, original));
             });
         },
 
