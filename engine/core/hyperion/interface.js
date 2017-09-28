@@ -100,6 +100,7 @@ $.require([
                 }));
             }).then(function(res) {
                 map = res;
+                console.log('loaded hype map', map);
 
                 /*if ($.config.get('docker.cleanup')) {
                     var use = [];
@@ -116,8 +117,17 @@ $.require([
                 self._config.map = map;
 
                 var watch = new watcher(self);
+                console.log('init watcher with config', self._config);
                 watch.set(self._config);
+                
+                var timeout = setTimeout(function() {
+                    console.log('skip fetch map from remote');
+                    watch.startUp();
+                }, $.time.second(15).get);
+
                 watch.data.init(self._config.key).then(function() {
+                    clearTimeout(timeout);
+                    console.log('update map from remote');
                     watch.startUp();
                 });
 
