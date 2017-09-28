@@ -314,8 +314,9 @@ $.require([
             var wait = [];
             for (var i in imgBuild) {
                 if (imgBuild[i] && i.match(/\/.*:/)) {
-                    console.log(i, i.match(/\/.*:/));
-                    wait.push(this.build({image: i, name: i.match(/\/.*:/)[0].slice(1, -1)}));
+                    //console.log(i, i.match(/\/.*:/));
+                    //wait.push(this.build({image: i, name: i.match(/\/.*:/)[0].slice(1, -1)}));
+                    wait.push(this.build(i));
                 }
             }
 
