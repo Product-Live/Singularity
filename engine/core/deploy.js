@@ -24,7 +24,7 @@ $.require([
     obj.prototype = $.extends('!base', {
         bash: function(cmd) {
             return (bash.raw(cmd, {cwd: $.path('root!')}, true).then(function(res) {
-                return ((res.err || []).join(' ') +  ' ' (res.out || []).join(' ')).trim();
+                return ((res.err || []).join(' ') +  ' ' + (res.out || []).join(' ')).trim();
             }, function(err) {
                 return (err);
             }));
@@ -52,7 +52,7 @@ $.require([
                 if (res['Distributor ID'] != 'Ubuntu') {
                     p.resolve();
                 } else{
-                    return (self._bash('apt-get update'))
+                    return (self.bash('apt-get update'))
                 }
             }).then(function() {
                 if (config.user && config.user.match(/^[a-zA-Z0-9]+$/)) {
@@ -109,6 +109,12 @@ $.require([
             }).then(function() {
                 return (self.bash('systemctl start ' + service + '.service'));
             }).then(function() {
+                return $.all([ // these will have root as owner because of this
+                    $.file.remove('engine!/node_modules/'),
+                    $.file.remove('engine!/package-lock.json')
+                ]);
+            }).then(function () {
+
                 p.resolve()
             });
 
