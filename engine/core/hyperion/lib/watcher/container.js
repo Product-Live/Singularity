@@ -217,8 +217,10 @@ $.require([
                 var link = self._container().link, wait = [], map = self._containerMap();
 
                 for (var i in link) {
-                    $.console.debug(link[i], ':', map[link[i]]._absoluteID);
-                    wait.push(map[link[i]].on('start'));
+                    if (map[link[i]]) {
+                        $.console.debug(link[i], ':', map[link[i]]._absoluteID);
+                        wait.push(map[link[i]].on('start'));
+                    }
                 }
 
                 $.console.debug('found image getting links for', self._container().key, 'are', link, wait.length);
