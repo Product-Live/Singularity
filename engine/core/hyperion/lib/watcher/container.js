@@ -35,15 +35,18 @@ $.require([
                 return ($.promise().resolve());
             }
 
+            var name = _.alpha(self._absoluteID || self._container().key);
             self._initShell().then(function (env) {
-                return (bash.run('docker inspect ' + _.alpha(self._absoluteID || self._container().key), env));
+                return (bash.run('docker inspect ' + name, env));
             }).then(function(res) {
                 var raw = res.err.join('\n') + res.out.join('\n');
                 if (res.err.length > 0 && raw.match(/no\ssuch/i)) {
+                    console.log('isAlive: no much container key "' + name + '"');
                     p.reject(false);
                 } else {
                     var json = $.json.parse(res.out.join(' '));
                     if (!json) {
+                        console.log('isAlive: container inspect not json key "' + name + '"');
                         p.reject(true);
                         return;
                     }
@@ -57,9 +60,11 @@ $.require([
                         ping: (self._container().ping || 0) + 1
                     });
 
-                    if ($.is.got(self._container().status, ['created', 'running'])) {
+                    var status = self._container().status;
+                    if ($.is.got(status, ['created', 'running'])) {
                         p.resolve();
                     } else {
+                        console.log('isAlive: container status is wrong "' + status + '" key "' + name + '"');
                         p.reject(true);
                     }
                 }
