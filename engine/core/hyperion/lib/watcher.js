@@ -359,8 +359,47 @@ $.require([
                             return (true);
                         }
 
+                        console.log('--- alive', self._config.runCycle || 0);
                         self._config.runCycle += 1;
-                        if (checkContainer.length == 0) {
+                        for (var i in self._container) {
+                            if ($.defined(self._container[i])) {
+                                (function(i, container) {
+                                    var map = container.map();
+                                    console.log('--- ping', i, container.name());
+
+                                    if (map.active) {
+                                        container.ping(true).then(function () {
+                                            if (self._container[i]) {
+                                                console.log('container', container.name(), 'valid');
+                                            }
+                                            return (true);
+                                        }, function (err) {
+                                            if (self._container[i]) {
+                                                console.log('container', container.name(), 'error', err);
+
+                                                return (container.recreate());
+                                            }
+                                            return (true);
+                                        });
+                                    } else {
+                                        container.isAlive().then(function() {
+                                            return (true);
+                                        }, function() {
+                                            return (true);
+                                        }).then(function() {
+                                            var map = container.map();
+                                            if (map.status && !$.is.got(map.status, ['exited', 'stopped'])) {
+                                                console.log(map.status);
+                                                return (container.stop());
+                                            }
+                                            return (true);
+                                        });
+                                    }
+                                })(i, self._container[i]);
+                            }
+                        }
+                        console.log('--- alive ---');
+                        /*if (checkContainer.length == 0) {
                             for (var i in self._container) {
                                 if ($.defined(self._container[i])) {
                                     checkContainer.push(self._container[i]);
@@ -402,7 +441,12 @@ $.require([
                                     });
                                 }
                             }
-                        }
+                        }*/
+                        /*for (var i in self._container) {
+                            if ($.defined(self._container[i])) {
+                                checkContainer.push(self._container[i]);
+                            }
+                        }*/
                     }, self._config.rate.ping);
 
                 }, $.time.second(1)));
