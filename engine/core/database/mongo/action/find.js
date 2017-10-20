@@ -51,13 +51,17 @@ obj.prototype = {
     toArray: function() {
         var p = new $.promise();
 
-        this._obj.toArray(function(err, result) {
-            if (err) {
-                p.reject(err);
-            } else {
-                p.resolve(result);
-            }
-        });
+        if (!$.defined(this._obj)) {
+            p.reject(new Error('connection is undefined'));
+        } else {
+            this._obj.toArray(function (err, result) {
+                if (err) {
+                    p.reject(err);
+                } else {
+                    p.resolve(result);
+                }
+            });
+        }
 
         return (p);
     },
