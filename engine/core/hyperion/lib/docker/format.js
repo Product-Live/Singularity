@@ -9,7 +9,7 @@ $.require([
     var obj = function () {};
     obj.prototype = {
         escape: function(str) {
-            return (($.is.string(str)) ? str.replace(/\\([\s\S])|(")/g, "\\$1$2") : '');
+            return (($.is.string(str) || $.is.number(str)) ? str.replace(/\\([\s\S])|(")/g, "\\$1$2") : '');
         },
         cleanup: function(str) {
             return (($.is.string(str)) ? this.escape(str.replace(/[;\s]/g, '')) : '');
