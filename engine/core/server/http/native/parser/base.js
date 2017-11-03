@@ -12,10 +12,10 @@ $.require([
             return (Buffer.alloc(Math.min(Number(this._req.headers['content-length']) || 0, this._max)));
         },
         fetch: function() {
-            var body = this.createBuffer(), self = this, p = new $.promise();
+            var body = /*this.createBuffer()*/Buffer.from(''), self = this, p = new $.promise();
 
             this._req.on('data', function(data) {
-                body += data;
+                body = Buffer.concat([body, data]);
 
                 if (body.length > self._max) {
                     self._req.connection.end('HTTP/1.1 413 Request Entity Too Large\r\n\r\n');
