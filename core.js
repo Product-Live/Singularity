@@ -85,7 +85,7 @@ module.exports = function(bootstrap) {
 
         var keychain = c.get('keychain') || env.chainPassword || '54IOKL2TJ29IUJ';
         var conf = $.schema.merge($.schema.merge(setupConfig, {
-            keychain: (bootstrap.keychain !== false) ? require(appRoot.engine + '/engine/core/lib/keychain.js')({
+            keychain: (bootstrap.keychain) ? require(appRoot.engine + '/engine/core/lib/keychain.js')({
                 password: keychain,
                 path: appRoot.project + '/config/'
             }).load() : {},
