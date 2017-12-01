@@ -16,7 +16,7 @@ $.require([
     obj.prototype = $.extends(base, {
         get: function() {
             return (this.fetch().then(function(body) {
-                return ({parsed: queryString.parse(body), body: body});
+                return ({parsed: queryString.parse(body.toString().trim()), body: body});
             }));
         }
     });

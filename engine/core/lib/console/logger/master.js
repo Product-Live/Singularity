@@ -9,7 +9,7 @@ $.require([
 	var obj = function() {
         this._conf = $.config.get('console.save');
         if (!this._conf) {
-            console.warn('missing config for $.console.log will not be able to save');
+            //console.warn('missing config for $.console.log will not be able to save');
             return; // lets not load the without config
         }
 

@@ -1,5 +1,7 @@
 "use strict";
 
+var fs = require('fs');
+
 var obj = function(config) {
 	this.reload(config);
 };
@@ -38,7 +40,7 @@ obj.prototype = {
 		try {
 			this._config = require(appRoot.project + '/config.js')(config || {});
 			this._cachePath = {};
-		} catch(e) {
+		} catch(err) {
 			this._config = {
 				require: {
 					path: {
@@ -63,7 +65,12 @@ obj.prototype = {
 					}
 				}
 			};
-			console.warn('error loading config using fallback');
+			fs.stat(appRoot.project + '/config.js', function(e) {
+				if (!e) {
+					console.warn('failed to load config file in "' + appRoot.project + '/config.js"');
+					console.warn(err);
+				}
+			});
 		}
 		return (this);
 	}

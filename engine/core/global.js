@@ -7,7 +7,7 @@ global.$ = {};
 module.exports = {
 	preConfig: function() {
 		global.$.crypto = require(libPath + 'crypto.js');
-		global.$.keychain = require(libPath + 'keychain.js');
+		global.$.keychain = require(libPath + 'keychain.js'); // need to look into removing this from global
 	},
 	base: function(config) { // dependency free global libs
 		// no config needed
@@ -37,8 +37,8 @@ module.exports = {
 
 		global.$.cast = new ($.require('lib!cast.js'))();
         global.$.version = $.require('lib!version.js');
-        global.$.currency = new ($.require('lib!currency/util.js'))();
-        global.$.country = new ($.require('lib!country/util.js'))();
+        global.$.currency = new ($.require('lib!currency/util.js'))(); // this could be moved into core
+        global.$.country = new ($.require('lib!country/util.js'))(); // this could be moved into core
 
 		global.$.array = new ($.require('lib!array.js'))();
 		global.$.string = new ($.require('lib!string.js'))();
@@ -57,7 +57,7 @@ module.exports = {
 	},
 
     npm: function() { // globals that have a npm dependency
-		var c = $.require('lib!console.js');
+		var c = $.require('lib!console.js'); // did this a while ago don't like it anymore maybe remove?
 		global.$.console = c.log;
 		global.$.color = c.color;
 

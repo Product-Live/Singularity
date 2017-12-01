@@ -68,7 +68,7 @@ $.require([
         },
 
         rawData: function() {
-            return (this._body.raw);
+            return (this._body.body || this._body.raw);
         },
 
         /**

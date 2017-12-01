@@ -25,7 +25,7 @@ $.require([
         get: function() {
             if ($.is.got(this._req.method, ['POST', 'PUT', 'DELETE'])) {
                 var type = (this._req.headers['content-type'] || '').split(';')[0];
-
+                
                 if ($.defined(this._parser[type])) {
                     var a = new this._parser[type](this._req, this._res);
                     return (a.get());
