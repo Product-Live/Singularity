@@ -118,6 +118,15 @@ module.exports = function(bootstrap) {
             }
         }
 
+        c.if('config', function () {
+            try {
+                var data = JSON.parse(require('fs').readFileSync(c.get('config')));
+                conf = $.schema.merge(conf, data);
+            } catch (e) {
+                console.log('problem loading config overload file path "' + $.get('config') + '"',  e);
+            }
+        });
+
         c.if('local', function () {
             conf.isLocal = true; // setup local version of app
             $.config.reload(conf);
