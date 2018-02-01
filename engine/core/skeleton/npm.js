@@ -1,6 +1,6 @@
 "use strict";
 
-const core = require('./Singularity/core.js'), base = (require('path').resolve(__dirname)).replace(/\\/g, '/');
+const core = require('./node_modules/singularityjs/core.js'), base = (require('path').resolve(__dirname)).replace(/\\/g, '/');
 
 core({
     absoluteRoot: base,

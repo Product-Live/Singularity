@@ -8,10 +8,10 @@
   <p>A NodeJS framework oriented towards organizing code into modules for service based applications.</p>
 </div>
 
-#### `Quick start`
+### `Quick start`
 There are two ways to create a project
 
-## `Git submodule`
+#### `Git submodule`
 Here is the a example for the setup of a basic project/service
 ```shell
     mkdir project && cd project
@@ -24,10 +24,10 @@ Here is the a example for the setup of a basic project/service
 ```
 One liner version
 ```shell
-    a="project";b="Singularity/engine/core/skeleton/";mkdir $a;cd $a;git init;git submodule add https://github.com/Product-Live/Singularity.git Singularity;cp $b/submodule.js main.js;cp $b/ignore.js .gitignore;node main.js --skeleton app;node main.js --skeleton module --name api
+    a="project"&&b="Singularity/engine/core/skeleton"&&mkdir $a&&cd $a&&git init&&git submodule add https://github.com/Product-Live/Singularity.git Singularity&&cp $b/submodule.js main.js&&cp $b/ignore .gitignore&&node main.js --skeleton app&&node main.js --skeleton module --name api
 ```
 
-## `Npm`
+#### `Npm`
 Here is the a example for the setup of a basic project/service
 ```shell
     mkdir project && cd project
@@ -43,7 +43,7 @@ One liner version
     a="project";b="node_modules/singularityjs/engine/core/skeleton";mkdir $a;cd $a;npm init -f;npm install singularityjs;cp $b/npm.js main.js;cp $b/ignore .gitignore;node main.js --skeleton app;node main.js --skeleton module --name api
 ```
 
-#### `Cloning a submodule project`
+### `Cloning a submodule project`
 Fresh clone of a project
 ```shell
     git clone --recursive git://github.com/user/project.git
@@ -55,7 +55,7 @@ On a already cloned project
     git submodule update --init --recursive
 ```
 
-## Project structure
+### Project structure
 This is what the skeleton app looks like
 * app
     * boostrap
@@ -75,10 +75,10 @@ This is what the skeleton app looks like
 * Singularity (submodule)
 * main.js (entry point)
 
-## Documentation
-[TODO](documentation/README.md)
+### Documentation
+[Work in progress](https://github.com/singularityjs/Documentation)
 
-## Dependencies
+### Dependencies
 These are the base npm dependencies used in the framework
 - bcryptjs
 - mongodb

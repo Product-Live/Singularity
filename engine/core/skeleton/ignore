@@ -76,5 +76,10 @@ jspm_packages
 /app/resources/
 /app/resources/*
 
-node_modules
+/node_modules/singularityjs/engine/node_modules
+/node_modules/singularityjs/engine/package.json
+/node_modules
+/node_modules/.*
+
+.git
 sh.exe.stackdump
