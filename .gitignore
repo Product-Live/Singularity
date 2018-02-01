@@ -72,3 +72,5 @@ jspm_packages
 
 /engine/node_modules
 /engine/package.json
+
+sh.exe.stackdump
