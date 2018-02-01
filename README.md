@@ -40,7 +40,7 @@ Here is the a example for the setup of a basic project/service
 ```
 One liner version
 ```shell
-    a="project";b="node_modules/singularityjs/engine/core/skeleton";mkdir $a;cd $a;npm init -f;npm install singularityjs;cp $b/npm.js main.js;cp $b/ignore .gitignore;node main.js --skeleton app;node main.js --skeleton module --name api
+    a="project"&&b="node_modules/singularityjs/engine/core/skeleton"&&mkdir $a&&cd $a&&npm init -f&&npm install singularityjs&&cp $b/npm.js main.js&&cp $b/ignore .gitignore&&node main.js --skeleton app&&node main.js --skeleton module --name api
 ```
 
 ### `Cloning a submodule project`

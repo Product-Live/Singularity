@@ -73,9 +73,18 @@ jspm_packages
 
 /Singularity/engine/node_modules
 /Singularity/engine/package.json
+/Singularity/engine/package-lock.json
 /app/resources/
 /app/resources/*
 
+engine/package.json
+engine/package-lock.json
+
+/node_modules/singularityjs/engine/node_modules
+/node_modules/singularityjs/engine/package.json
+/node_modules/singularityjs/engine/package-lock.json
+/node_modules
+/node_modules/.*
+
 .git
-node_modules
 sh.exe.stackdump
