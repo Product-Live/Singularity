@@ -8,7 +8,12 @@ $.require([
 
     var obj = function(config) {
         this._repo = {
-            module: 'https://github.com/anzerr/Skeleton_Module.git',
+            module: { // add more
+                basic: 'https://github.com/anzerr/Skeleton_Module.git',
+                plain: 'https://github.com/anzerr/Skeleton_Module.git',
+                example: 'https://github.com/anzerr/Skeleton_Module.git',
+                client: 'https://github.com/anzerr/Skeleton_Module_Client.git'
+            },
             app: 'https://github.com/anzerr/Skeleton_App.git'
         };
         this._config = config;
@@ -22,7 +27,7 @@ $.require([
             return ($.file.stat(p + '/app').then(function() {
                 throw new Error('app already exist can\'t create skeleton.');
             }, function() {
-                return (g.clone());
+                return (g.clone(true));
             }).then(function() {
                 return ($.all([
                     $.file.remove(p + '/app/.git'),
@@ -38,16 +43,21 @@ $.require([
         },
 
         module: function() {
-            const p = appRoot.absolute + '/app/module/', g = new git(this._repo.module, {
+            const p = appRoot.absolute + '/app/module/', g = new git(this._repo.module[this._config.type || 'basic'], {
                 name: this._config.name,
                 path: p
             }), self = this;
+
             return ($.file.stat(p + this._config.name).then(function() {
                 throw new Error('module already exist can\'t create skeleton.');
             }, function() {
                 return (g.clone());
             }).then(function() {
                 return ($.all([
+                    $.file.remove(p + self._config.name + '/README.md'),
+                    $.file.remove(p + self._config.name + '/README'),
+                    $.file.remove(p + self._config.name + '/LICENSE'),
+                    $.file.remove(p + self._config.name + '/LICENSE.md'),
                     $.file.remove(p + self._config.name + '/.gitmodules'),
                     $.file.remove(p + self._config.name + '/.gitignore'),
                     $.file.remove(p + self._config.name + '/.git')

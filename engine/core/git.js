@@ -33,8 +33,8 @@ $.require([
             }));
         },
 
-        clone: function() {
-            return (this._bash('git clone ' + this._url + ' ' + this._key));
+        clone: function(recursive) {
+            return (this._bash('git clone ' ((recursive)? '--recursive ' : '') + this._url + ' ' + this._key));
         },
 
         version: function() {

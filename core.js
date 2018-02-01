@@ -11,7 +11,7 @@ var util = {
         }
         return (false);
     },
-    
+
     commandLine: function() {
         var libLoader = require(appRoot.engine + '/engine/core/global.js');
         libLoader.preConfig();
@@ -178,7 +178,8 @@ module.exports = function(bootstrap) {
         }).elseIf('skeleton', function () { // deploy all dependencies onto the system
             var a = new ($.require('core!skeleton.js'))({
                 type: c.get('skeleton') || 'app',
-                name: c.get('name') || 'basic'
+                name: c.get('name') || 'basic',
+                type: c.get('type') || 'basic'
             });
 
             a.create().then(function () {

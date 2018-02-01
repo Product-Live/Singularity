@@ -1,6 +1,6 @@
 {
     "name": "singularityjs",
-    "version": "0.9.0",
+    "version": "0.9.1",
     "description": "A NodeJS framework oriented towards organizing code into modules for service based applications.",
     "main": "core.js",
     "scripts": {
