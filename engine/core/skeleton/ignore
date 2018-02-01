@@ -75,3 +75,6 @@ jspm_packages
 /Singularity/engine/package.json
 /app/resources/
 /app/resources/*
+
+node_modules
+sh.exe.stackdump

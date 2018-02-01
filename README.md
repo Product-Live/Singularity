@@ -9,19 +9,38 @@
 </div>
 
 #### `Quick start`
+There are two ways to create a project
+
+## `Git submodule`
 Here is the a example for the setup of a basic project/service
 ```shell
     mkdir project && cd project
     git init
     git submodule add https://github.com/Product-Live/Singularity.git Singularity
-    cp Singularity/engine/core/skeleton/main.js main.js
+    cp Singularity/engine/core/skeleton/submodule.js main.js
     cp Singularity/engine/core/skeleton/ignore .gitignore
     node main.js --skeleton app
-    node main.js --skeleton module --name worker
+    node main.js --skeleton module --name api
 ```
 One liner version
 ```shell
-    a="project" && mkdir $a && cd $a && git init && git submodule add https://github.com/Product-Live/Singularity.git Singularity && cp Singularity/engine/core/skeleton/main.js main.js && cp Singularity/engine/core/skeleton/ignore .gitignore && node main.js --skeleton app && node main.js --skeleton module --name worker
+    a="project";b="Singularity/engine/core/skeleton/";mkdir $a;cd $a;git init;git submodule add https://github.com/Product-Live/Singularity.git Singularity;cp $b/submodule.js main.js;cp $b/ignore.js .gitignore;node main.js --skeleton app;node main.js --skeleton module --name api
+```
+
+## `Npm`
+Here is the a example for the setup of a basic project/service
+```shell
+    mkdir project && cd project
+    npm init -f
+    npm install singularityjs
+    cp node_modules/singularityjs/engine/core/skeleton/npm.js main.js
+    cp node_modules/singularityjs/engine/core/skeleton/ignore .gitignore
+    node main.js --skeleton app
+    node main.js --skeleton module --name api
+```
+One liner version
+```shell
+    a="project";b="node_modules/singularityjs/engine/core/skeleton";mkdir $a;cd $a;npm init -f;npm install singularityjs;cp $b/npm.js main.js;cp $b/ignore .gitignore;node main.js --skeleton app;node main.js --skeleton module --name api
 ```
 
 #### `Cloning a submodule project`

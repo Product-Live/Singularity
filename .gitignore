@@ -63,14 +63,19 @@ jspm_packages
 # stdlog
 .stderr
 .stdout
+/app/.stderr
+/app/.stdout
 *.stderr
 *.stdout
 
 # app files
 /.idea/*
-.idea/*
 
-/engine/node_modules
-/engine/package.json
+/Singularity/engine/node_modules
+/Singularity/engine/package.json
+/app/resources/
+/app/resources/*
 
+.git
+node_modules
 sh.exe.stackdump
