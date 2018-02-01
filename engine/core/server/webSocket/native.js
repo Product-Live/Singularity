@@ -23,7 +23,7 @@ $.require([
         _close: function(wrapper) {
             var id = wrapper.id();
             delete this._clients[id];
-            $.console.log($.color.yellow(id + " disconnected "));
+            //$.console.log($.color.yellow(id + " disconnected "));
             wrapper.close();
         },
 
@@ -43,7 +43,7 @@ $.require([
                 });
 
                 socket.on('error', function() {
-                    console.log('websocket error client', err);
+                    //console.log('websocket error client', err);
                     self._close(wrapper);
                 });
                 socket.on('close', function() {
