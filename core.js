@@ -177,9 +177,9 @@ module.exports = function(bootstrap) {
             });
         }).elseIf('skeleton', function () { // deploy all dependencies onto the system
             var a = new ($.require('core!skeleton.js'))({
-                type: c.get('skeleton') || 'app',
-                name: c.get('name') || 'basic',
-                type: c.get('type') || 'basic'
+                type: c.get('skeleton') || 'app', // app, module
+                name: c.get('name') || 'basic', // name of module
+                module: c.get('module') || 'basic' // module base
             });
 
             a.create().then(function () {

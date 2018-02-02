@@ -43,7 +43,7 @@ $.require([
         },
 
         module: function() {
-            const p = appRoot.absolute + '/app/module/', g = new git(this._repo.module[this._config.type || 'basic'], {
+            const p = appRoot.absolute + '/app/module/', g = new git(this._repo.module[this._config.module || 'basic'], {
                 name: this._config.name,
                 path: p
             }), self = this;
