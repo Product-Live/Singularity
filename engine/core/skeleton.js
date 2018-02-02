@@ -10,7 +10,7 @@ $.require([
         this._repo = {
             module: { // add more
                 basic: 'https://github.com/anzerr/Skeleton_Module.git',
-                plain: 'https://github.com/anzerr/Skeleton_Module.git',
+                plain: 'https://github.com/anzerr/Skeleton_Module_Plain.git',
                 example: 'https://github.com/anzerr/Skeleton_Module.git',
                 client: 'https://github.com/anzerr/Skeleton_Module_Client.git'
             },
