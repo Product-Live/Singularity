@@ -34,7 +34,7 @@ $.require([
         },
 
         clone: function(recursive) {
-            return (this._bash('git clone ' ((recursive)? '--recursive ' : '') + this._url + ' ' + this._key));
+            return (this._bash('git clone ' + ((recursive)? '--recursive ' : '') + this._url + ' ' + this._key));
         },
 
         version: function() {
