@@ -49,9 +49,6 @@ module.exports = function(bootstrap) {
     };
 
     var stdout = new (require(appRoot.engine + '/engine/core/stdout.js'))();
-    if (util.has(/^--PERFORMANCE_DUMP/i)) {
-        global.__APP_PERFORMANCE_DUMP = '8aze7'; // magic Number
-    }
 
     var c = util.commandLine();
 

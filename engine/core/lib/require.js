@@ -2,7 +2,7 @@
 
 var self = {
 	origin: require,
-	debugHook: global.__APP_PERFORMANCE_DUMP,
+	debugHook: global._require_hook,
 	hook: new (require(appRoot.engine + '/engine/core/lib/hook.js'))(),
 	get: function(p) {
 		return ($.path(p));
@@ -41,6 +41,6 @@ module.exports = function(path, callback) {
 		}
 		return ((out.length == 1)? out[0] : out);
 	}
-	
+
 	return (new obj());
 };

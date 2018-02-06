@@ -2,10 +2,12 @@
 
 $.require([
     'core!git',
-    'core!npm'
+    'core!npm',
+    'node!vm'
 ], function(
    git,
-   npm
+   npm,
+   vm
 ) {
 
     var obj = function() {
@@ -14,7 +16,6 @@ $.require([
     obj.prototype = $.extends('!base', {
         /**
          * Fetch npm dependencies loaded modules have
-         * Don't like this but looks like the safer way of doing it
          *
          * @param res
          * @returns {{}}
@@ -22,19 +23,21 @@ $.require([
          */
         _dependencies: function(res) {
             try {
-                var d = res.replace(/[\r\n\t\s']/g, ''), out = {};
-                d = d.match(/dependencies:\s*{.*?}/);
-                if (d && d[0]) {
-                    d = d[0].substr(14, d[0].length - 15).split(',');
-                    for (var i in d) {
-                        var x = d[i].split(':');
-                        out[x[0]] = x[1];
-                    }
+                var d = res.replace(/[\r\n\t\s]/g, ''), out = {};
+                var pattern = /module\.exports=function\(\){return\(?(.+?)\)?;};/m;
+                var match = pattern.exec(d), sandbox = {config: {}};
+                if (match) {
+                    vm.createContext(sandbox);
+                    vm.runInContext('var config = ' + match[1], sandbox);
+                }
+
+                if (sandbox.config && sandbox.config.dependencies) {
+                    return (sandbox.config.dependencies);
                 }
             } catch(e) {
-                console.log('failed to get dependencies from mo');
+                throw e;
             }
-            return (out);
+            return ({});
         },
 
         /**

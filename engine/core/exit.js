@@ -81,12 +81,13 @@ $.require([
 				});
 
 				p.then(function () {
-					var hook = new (require($.path('core!lib/hook.js')))();
+					/*var hook = new (require($.path('core!lib/hook.js')))();
 					hook.dump();
 
                     var l = new logger(); // save log still in memory (base system thing)
                     console.log('saving logs ...');
-                    return (l.close());
+                    return (l.close());*/
+					return true;
                 }).then(function () {
                     console.log('exit sent to process', code);
                     clearTimeout(self._run); // kill app pulse

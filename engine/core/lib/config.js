@@ -3,11 +3,10 @@
 var fs = require('fs');
 
 var obj = function(config) {
+    this._cachePath = {};
 	this.reload(config);
 };
 obj.prototype = {
-    _cachePath: {}, // hash map to reduce look up
-
 	/**
 	 * Get config from cache or application setup
 	 *
@@ -37,6 +36,10 @@ obj.prototype = {
 	 * @returns {obj}
 	 */
 	reload: function(config) {
+        if (!$.is.object(config) || $.is.array(config)) {
+            throw new Error('config seed needs to be a object.');
+        }
+
 		try {
 			this._config = require(appRoot.project + '/config.js')(config || {});
 			this._cachePath = {};
@@ -72,6 +75,7 @@ obj.prototype = {
 				}
 			});
 		}
+
 		return (this);
 	}
 };
