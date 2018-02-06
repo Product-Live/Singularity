@@ -17,7 +17,7 @@ obj.prototype = {
 		return ($.defined(this._type[k]) && this._type[k]);
 	},
 	int: function(a) {
-		return (!isNaN(a) && Number(a) == a);
+		return (!isNaN(a) && a !== '' && (typeof(a) === 'number' || typeof(a) === 'string') && Number(a) == a);
 	},
 	number: function(a) {
 		return this.int(a);
@@ -29,7 +29,7 @@ obj.prototype = {
 		return (typeof(a) === 'string');
 	},
 	object: function(a) {
-		return (typeof(a) === 'object' && a != null);
+		return (typeof(a) === 'object' && a != null && !this.array(a));
 	},
 	bool: function(a) {
 		return (typeof(a) === 'boolean');
@@ -38,7 +38,7 @@ obj.prototype = {
 		return (typeof(a) === 'object' && Array.isArray(a));
 	},
 	time: function(a) {
-		return (this.string(a) || this.int(a));
+		return (this.instance(a, Date) || ((this.string(a) || this.int(a)) && new Date(a).toString() !== 'Invalid Date'));
 	},
 	func: function(a) {
 		return (typeof(a) === 'function');
@@ -47,51 +47,58 @@ obj.prototype = {
 		return (this.func(a));
 	},
 	defined: function(a) {
-		return a != null;
+		return $.defined(a);
 	},
-	
+
 	phoneNumber: function(a) {
 		return (/\+[0-9]{11}$/g.test(a));
 	},
 
-    /**
-     * Test url (https://mathiasbynens.be/demo/url-regex)
-     *
-     * @param url
-     * @returns {boolean}
-     */
+	/**
+	* Test url (https://mathiasbynens.be/demo/url-regex)
+	*
+	* @param url
+	* @returns {boolean}
+	*/
 	url: function(url) {
-        return (/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/im.test(url));
+		return (/^(https?|ftp):\/\/[^\s\/$.?#].[^\s]*$/im.test(url));
 	},
 
 	/**
-	 * Test email (http://emailregex.com/)
-	 *
-	 * @param email
-	 * @returns {boolean}
-	 */
+	* Test email (http://emailregex.com/)
+	*
+	* @param email
+	* @returns {boolean}
+	*/
 	email: function(email) {
 		return (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email));
 	},
 
 	/**
-	 * Is Instance of a object
-	 *
-	 * @param a
-	 * @param b
-	 * @returns {boolean}
-	 */
-    instance: function(a, b) {
-        return (a instanceof b);
-    },
+	* Is Instance of a object
+	*
+	* @param a
+	* @param b
+	* @returns {boolean}
+	*/
+	instance: function(a, b) {
+		if ($.is.object(a) && $.is.func(b)) {
+			try {
+				return (a instanceof b);
+			} catch(e) {
+				return false;
+			}
+		}
+		return false;
+	},
 
 	/**
-	 * Is A not found in B's array
-	 *
-	 * @param a
-	 * @param b
-	 * @returns {boolean}
-	 */
+	* Is A not found in B's array
+	*
+	* @param a
+	* @param b
+	* @returns {boolean}
+	*/
 	not: function(a, b) {
 		if (this.array(b)) {
 			for (var i in b) {
@@ -105,12 +112,12 @@ obj.prototype = {
 	},
 
 	/**
-	 * Does a have a value in b
-	 *
-	 * @param a
-	 * @param b
-	 * @returns {boolean}
-	 */
+	* Does a have a value in b
+	*
+	* @param a
+	* @param b
+	* @returns {boolean}
+	*/
 	got: function(a, b) {
 		if (this.object(a)) {
 			var c = 0, found = [];
@@ -126,23 +133,23 @@ obj.prototype = {
 	},
 
 	/**
-	 * Take what is valid
-	 *
-	 * @param a
-	 * @param b
-	 * @returns {*}
-	 */
+	* Take what is valid
+	*
+	* @param a
+	* @param b
+	* @returns {*}
+	*/
 	default: function(a, b) {
 		return ($.defined(a) ? a : b);
 	},
 
 
 	/**
-	 * Is value give empty
-	 *
-	 * @param obj
-	 * @returns {boolean}
-	 */
+	* Is value give empty
+	*
+	* @param obj
+	* @returns {boolean}
+	*/
 	empty: function(obj) {
 		if (!$.defined(obj)) {
 			return (true);

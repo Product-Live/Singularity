@@ -1,9 +1,7 @@
 "use strict";
 
 
-var obj = function() {
-
-};
+var obj = function() {};
 obj.prototype = {
     /**
      * Deep merge object B into A
@@ -27,7 +25,7 @@ obj.prototype = {
 
 	arrayMerge: function(a, b) {
 		if ($.defined(b)) {
-			if ($.is.object(a) && $.is.object(b)) {
+			if (($.is.object(a) || $.is.array(a)) && ($.is.object(b) || $.is.array(b))) {
 				if ($.is.array(a) && $.is.array(b)) {
 					for (var x in b) {
 						a.push(b[x]);
@@ -81,7 +79,7 @@ obj.prototype = {
 			this._hash = [];
 			this._deep = false;
 			this._data = data;
-			this.copy = ($.is.object(data) && data !== null) ? this._format(data, 0) : data;
+			this.copy = (($.is.object(data) || $.is.array(data)) && data !== null) ? this._format(data, 0) : data;
 		};
 		copy.prototype = {
 			_format: function(obj, sub) {
@@ -93,7 +91,7 @@ obj.prototype = {
 
 				for (var i in obj) {
 					if (obj.hasOwnProperty(i)) {
-						if ($.is.object(obj[i]) && obj[i] !== null) {
+						if (($.is.object(obj[i]) || $.is.array(obj[i])) && obj[i] !== null) {
 							var circle = false;
 							for (var x in this._hash) {
 								if (this._hash[x] == obj[i]) {
