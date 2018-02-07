@@ -18,9 +18,17 @@ $.require([
         },
 
         compact: function(arr) {
-            var out = [];
-            for (var i in arr) {
-                if (arr[i]) {
+            if (!$.is.array(arr)) {
+                throw new Error('expected array as argument')
+            }
+            const out = [];
+            for (let i in arr) {
+                if ($.is.array(arr[i])) {
+                    let tmp = this.compact(arr[i]);
+                    for (let i in tmp) {
+                        out.push(tmp[i]);
+                    }
+                } else {
                     out.push(arr[i]);
                 }
             }
