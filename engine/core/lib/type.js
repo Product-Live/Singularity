@@ -29,7 +29,7 @@ obj.prototype = {
 		return (typeof(a) === 'string');
 	},
 	object: function(a) {
-		return (typeof(a) === 'object' && a != null && !this.array(a));
+		return (typeof(a) === 'object' && a != null);
 	},
 	bool: function(a) {
 		return (typeof(a) === 'boolean');
