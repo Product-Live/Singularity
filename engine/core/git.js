@@ -11,6 +11,9 @@ $.require([
         this._option = option;
         this._key = $.defined(this._option.name) ? this._option.name : $.crypto.hash($.config.get('env.session') + '.' + this._url);
         //this._name = (this.getPath().match(/([^\/]*)\/*$/)[0] || '').replace(/\/$/, '');
+        // test this._url to see if it's a url
+        // test this._key for the format it needs to be
+        // PPL CAN USE THIS AT FACE VALUE AND THINK ITS SAFE AND THROW USER INPUT INTO IT
     };
     obj.prototype = {
         _getPath: function(full) {
@@ -62,6 +65,7 @@ $.require([
         },
 
         reset: function(hash) {
+            // add regex to see if it's a hash;
             return (this._bash('git reset --hard ' + hash));
         }
     };

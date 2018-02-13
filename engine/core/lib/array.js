@@ -7,6 +7,12 @@ $.require([
 
     var obj = function() {};
     obj.prototype = {
+        /**
+         * clear a array of empty values like null or undefined
+         *
+         * @param  {[type]} arr [description]
+         * @return {[type]}     [description]
+         */
         clean: function(arr) {
             var out = [];
             for (var i in arr) {
@@ -17,6 +23,12 @@ $.require([
             return (out);
         },
 
+        /**
+         * compress all sub arrays in a given array into a single array
+         *
+         * @param  {[type]} arr [description]
+         * @return {[type]}     [description]
+         */
         compact: function(arr) {
             if (!$.is.array(arr)) {
                 throw new Error('expected array as argument')
@@ -35,6 +47,12 @@ $.require([
             return (out);
         },
 
+        /**
+         * slice the whole array into a new array
+         *
+         * @param  {[type]} arr [description]
+         * @return {[type]}     [description]
+         */
         clone: function(arr) {
             if ($.is.array(arr)) {
                 return arr.slice();
@@ -42,22 +60,37 @@ $.require([
             return null;
         },
 
+        /**
+         * create a array with a number pattern
+         *
+         * @param  {[type]} start [description]
+         * @param  {[type]} stop  [description]
+         * @param  {[type]} step  [description]
+         * @return {[type]}       [description]
+         */
         range: function(start, stop, step) {
-            var out = [];
-            if (!$.defined(stop) && $.defined(step)) {
-                for (var i = 0; i < start; i++) {
+            let out = [];
+            if (!$.defined(stop) && !$.defined(step)) {
+                for (let i = 0; i < start; i++) {
                     out.push(i);
                 }
             } else {
-                for (var i = start; i < stop; i += step) {
+                for (let i = start; i < stop; i += step) {
                     out.push(i);
                 }
             }
             return (out);
         },
 
+        /**
+         * find a element in a array and return it's key
+         *
+         * @param  {[type]} arr   [description]
+         * @param  {[type]} value [description]
+         * @return {[type]}       [description]
+         */
         find: function(arr, value) {
-            for (var i in arr) {
+            for (let i in arr) {
                 if (arr[i] == value) {
                     return (i)
                 }
@@ -65,9 +98,16 @@ $.require([
             return (null);
         },
 
+        /**
+         * find the last occurence of a value in a array and return it's key
+         *
+         * @param  {[type]} arr   [description]
+         * @param  {[type]} value [description]
+         * @return {[type]}       [description]
+         */
         findLast: function(arr, value) {
-            var find = null;
-            for (var i in arr) {
+            let find = null;
+            for (let i in arr) {
                 if (arr[i] == value) {
                     find = i;
                 }
@@ -75,9 +115,16 @@ $.require([
             return (find);
         },
 
+        /**
+         * create a array withoug all the duplicate values
+         *
+         * @param  {[type]} arr  [description]
+         * @param  {[type]} sort [description]
+         * @return {[type]}      [description]
+         */
         unique: function(arr, sort) {
-            var found = {}, out = [];
-            for (var i in arr) {
+            let found = {}, out = [];
+            for (let i in arr) {
                 if (!found[arr[i]]) {
                     out.push(arr[i]);
                     found[arr[i]] = true;
@@ -86,18 +133,37 @@ $.require([
             return ((sort)? out.sort() : out);
         },
 
+        /**
+         * fetch the first element of a array
+         *
+         * @param  {[type]} arr [description]
+         * @return {[type]}     [description]
+         */
         first: function(arr) {
             return (arr[0] || null);
         },
 
+        /**
+         * fetch the last element of a array
+         *
+         * @param  {[type]} arr [description]
+         * @return {[type]}     [description]
+         */
         last: function(arr) {
             return (arr[Math.max(0, arr.length - 1)] || null);
         },
 
+        /**
+         * map out the array into a object
+         *
+         * @param  {[type]} arr [description]
+         * @param  {[type]} key [description]
+         * @return {[type]}     [description]
+         */
         map: function(arr, key) {
-            var out = {};
+            let out = {};
             if ($.is.array(arr)) {
-                for (var i in arr) {
+                for (let i in arr) {
                     out[key(arr[i])] = arr[i];
                 }
             }

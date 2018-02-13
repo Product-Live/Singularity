@@ -6,7 +6,7 @@ global.$ = {};
 
 module.exports = {
 	preConfig: function() {
-		global.$.crypto = require(libPath + 'crypto.js');
+		global.$.crypto = new (require(libPath + 'crypto.js'))();
 		global.$.keychain = require(libPath + 'keychain.js'); // need to look into removing this from global
 	},
 	base: function(config) { // dependency free global libs

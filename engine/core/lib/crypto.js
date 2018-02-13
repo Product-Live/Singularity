@@ -4,6 +4,14 @@ var crypto = require('crypto');
 
 var obj = function() {};
 obj.prototype = {
+	/**
+	 * encrypt a string
+	 *
+	 * @param  {[type]} type     [description]
+	 * @param  {[type]} password [description]
+	 * @param  {[type]} text     [description]
+	 * @return {[type]}          [description]
+	 */
 	encrypt: function(type, password, text) {
 		var cipher = crypto.createCipher(type, password);
 		var encrypted = cipher.update(text, 'utf8', 'hex');
@@ -11,6 +19,14 @@ obj.prototype = {
 		return (encrypted);
 	},
 
+	/**
+	 * decrypt a string
+	 *
+	 * @param  {[type]} type     [description]
+	 * @param  {[type]} password [description]
+	 * @param  {[type]} text     [description]
+	 * @return {[type]}          [description]
+	 */
 	decrypt: function(type, password, text) {
 		var decipher = crypto.createDecipher(type, password);
 		var dec = decipher.update(text, 'hex', 'utf8');
@@ -18,16 +34,34 @@ obj.prototype = {
 		return (dec);
 	},
 
+	/**
+	 * Hash a string
+	 *
+	 * @param  {[type]} data [description]
+	 * @param  {[type]} type [description]
+	 * @return {[type]}      [description]
+	 */
 	hash: function(data, type) {
 		var sub = crypto.createHash(type || 'sha256');
 		sub.update(data);
 		return (sub.digest('hex'));
 	},
-	
+
+	/**
+	 * convert a string into base64
+	 *
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
 	btoa: function(data) {
 		return new Buffer(data).toString('base64');
 	},
 
+	/**
+	 * convert base64 into a ascii
+	 * @param  {[type]} data [description]
+	 * @return {[type]}      [description]
+	 */
 	atob: function(data) {
 		return new Buffer(data, 'base64').toString('ascii');
 	},
@@ -50,4 +84,4 @@ obj.prototype = {
 	}
 };
 
-module.exports = new obj();
+module.exports = obj;
