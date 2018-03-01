@@ -84,10 +84,10 @@ $.require([
             var self = this, p = new $.promise();
 
             self.isAlive().then(function() {
-                $.console.log($.color.yellow('exist',  self._container().key));
+                console.log($.color.yellow('exist',  self._container().key));
                 p.resolve();
             }, function (res) {
-                $.console.log($.color.yellow('exist',  self._container().key, res));
+                console.log($.color.yellow('exist',  self._container().key, res));
                 if (res) {
                     p.resolve();
                 } else {
@@ -121,10 +121,10 @@ $.require([
             self.isAlive().then(function() {
                 var valid = self._valid.is();
 
-                $.console.debug('ping', valid);
+                console.log('ping', valid);
                 cd({info: 'ping response for "' + key + '" is ' + valid});
                 if (!$.is.object(valid)) {
-                    $.console.debug('ping state', self._container().status);
+                    console.log('ping state', self._container().status);
                     cd({info: 'ping status "' + key + '" ' + self._container().status});
                     if ($.is.got(self._container().status, ['created', 'running'])) {
                         if ($.defined(self._container().unitaryTest)) {
@@ -194,13 +194,13 @@ $.require([
             this._starting = true;
 
             cd({info: 'running start on "' + key + '"'});
-            $.console.debug('running start on', self._container().key);
+            console.log('running start on', self._container().key);
             self._initShell().then(function (e) {
                 _env = e;
-                $.console.debug('init done', self._container().key);
+                console.log('init done', self._container().key);
                 return (self.images());
             }).then(function(images) {
-                $.console.debug('images done', self._container().key);
+                console.log('images done', self._container().key);
 
                 for (var i in images) {
                     if (images[i].name == self._container().image && images[i].tag == self._container().version) {
@@ -209,7 +209,7 @@ $.require([
                     }
                 }
 
-                $.console.docker('pulling image', self._container().image + ':' + self._container().version);
+                console.log('pulling image', self._container().image + ':' + self._container().version);
                 cd({info: 'pulling image ' + self._container().image + ':' + self._container().version + ' for "' + key + '"'});
                 return (self.registry.pull(self._container().image + ':' + self._container().version, cd).then(function(res) {
                     cd({info: 'successfull image pull for container "' + key + '"'});
@@ -223,15 +223,15 @@ $.require([
 
                 for (var i in link) {
                     if (map[link[i]]) {
-                        $.console.debug(link[i], ':', map[link[i]]._absoluteID);
+                        console.log(link[i], ':', map[link[i]]._absoluteID);
                         wait.push(map[link[i]].on('start'));
                     }
                 }
 
-                $.console.debug('found image getting links for', self._container().key, 'are', link, wait.length);
+                console.log('found image getting links for', self._container().key, 'are', link, wait.length);
                 cd({info: 'found image getting links for ' + key + ' count ' + wait.length + ' ' + $.json.encode(link)});
                 return ($.all(wait).then(function() {
-                    $.console.debug('links are up for', self._container().key);
+                    console.log('links are up for', self._container().key);
                     cd({info: 'links are up for ' + key});
                     return (self.exist());
                 }));
@@ -240,11 +240,11 @@ $.require([
                 if (!$.is.object(valid) && self._container().status == 'running') {
                     cd({info: 'found a valid running container for "' + key + '"'});
                     self._core._config.startTime = $.time.now().get;
-                    $.console.debug('found instance running going to use it', self._container().key, self._absoluteID);
+                    console.log('found instance running going to use it', self._container().key, self._absoluteID);
                     self._emitter.emit('start');
                     p.resolve(self._absoluteID);
                 } else {
-                    $.console.docker('docker container wrong', valid);
+                    console.log('docker container wrong', valid);
 
                     cd({info: 'stopping container found and recreating "' + key + '"'});
                     return (bash.run('docker stop ' + _.alpha(self._container().key), _env).then(function() {
@@ -252,11 +252,11 @@ $.require([
                     })); // remove and recreate with right image
                 }
             }, function () {
-                $.console.docker('pull image reject made us skip container check.');
+                console.log('pull image reject made us skip container check.');
                 cd({info: 'no containers found for "' + key + '"'});
                 return (true); // move onto create container
             }).then(function () {
-                $.console.debug('creating container.');
+                console.log('creating container.');
 
                 cd({info: 'starting container for "' + key + '"'});
                 return (self._create(_env));
@@ -278,7 +278,7 @@ $.require([
                 self._starting = false;
                 console.log('the id after all', self._absoluteID, res);
                 if (!$.defined(self._absoluteID)) {
-                    $.console.docker('start error', res.err, self._container().key);
+                    console.log('start error', res.err, self._container().key);
 
                     cd({info: 'startup for cotnaienr "' + key + '" has error ' + $.json.encode(res.err)});
                     if (!retry) {
@@ -296,7 +296,7 @@ $.require([
                         return (true);
                     }
                 } else {
-                    $.console.debug('absolute ID', self._absoluteID);
+                    console.log('absolute ID', self._absoluteID);
                 }
                 self._emitter.emit('start');
                 self._core._config.startTime = $.time.now().get;
@@ -319,7 +319,7 @@ $.require([
                 return (bash.run('docker stop ' + _.alpha(self._container().key), env));
              }).then(function(res) {
                  self._containerUpdate({status: 'stopped'});
-                 $.console.docker('container: ' + self._container().key + ' has stopped.');
+                 console.log('container: ' + self._container().key + ' has stopped.');
                  p.resolve();
              });
 
@@ -352,7 +352,7 @@ $.require([
             }).then(function() {
                 return (bash.run('docker rm -f ' + _.alpha(self._absoluteID || self._container().key), _env));
             }).then(function(res) {
-                $.console.docker('container: ' + self._absoluteID + ' ' + self._container().key + ' has stopped.');
+                console.log('container: ' + self._absoluteID + ' ' + self._container().key + ' has stopped.');
                 p.resolve();
             });
 
@@ -378,13 +378,13 @@ $.require([
             var self = this, p = new $.promise();
 
             self.remove().then(function() {
-                $.console.docker('container: ' + self._container().key + ' had last status:' + self._container().status + ' has been restarted.');
+                console.log('container: ' + self._container().key + ' had last status:' + self._container().status + ' has been restarted.');
                 return (self.start(false, cd));
             }).then(function(res) {
-                $.console.docker('restart out: ', res);
+                console.log('restart out: ', res);
                 p.resolve(res);
             }, function(err) {
-                $.console.docker('restart err: ', err);
+                console.log('restart err: ', err);
                 p.resolve(err);
             });
 

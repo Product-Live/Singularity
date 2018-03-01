@@ -21,7 +21,7 @@ $.require([
                 self._core._received(self, data);
             } else {
                 if (data == self._key) {
-                    $.console.log($.color.green(self._id, ' is now valid'));
+                    console.log($.color.green(self._id, ' is now valid'));
                     self._valid = true;
                 }
             }

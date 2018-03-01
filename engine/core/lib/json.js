@@ -13,7 +13,7 @@ obj.prototype = {
 		try {
 			a = JSON.parse(json);
 		} catch (err) {
-			//$.console.error('json decode', str, err.stack);
+			//console.log('json decode', str, err.stack);
 		}
 		return (a);
 	},
@@ -34,7 +34,7 @@ obj.prototype = {
 				a = JSON.stringify(str);
 			}
 		} catch (err) {
-			$.console.error('json encode error');
+			console.log('json encode error');
 		}
 		return (a);
 	},

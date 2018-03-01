@@ -156,7 +156,7 @@ $.require([
             this._initShell().then(function(env) {
                 return (bash.run('docker rm -f ' + _.alpha(key), env));
             }).then(function() {
-                $.console.docker('container: ' + key + ' has stopped.');
+                console.log('container: ' + key + ' has stopped.');
                 p.resolve();
             });
 
@@ -169,7 +169,7 @@ $.require([
             this._initShell().then(function(env) {
                 return (bash.run('docker stop ' + _.alpha(key), env));
             }).then(function() {
-                $.console.docker('container: ' + key + ' has stopped.');
+                console.log('container: ' + key + ' has stopped.');
                 p.resolve();
             });
 

@@ -46,7 +46,7 @@ $.require([
                     } else {
                         var process = child_process.spawn('docker-machine', ['ssh']);
                         process.on('error', function (err) {
-                            $.console.warn(err.toString());
+                            console.log(err.toString());
                         });
 
                         var run = true;
@@ -79,12 +79,12 @@ $.require([
                    return (bash.run('cp ' + $.path(path) + ' /etc/docker/certs.d/' + website + '/cert' + count + '.crt')); // weird why not use copy?
                 }, function(err) {
                     p.resolve();
-                    $.console.warn(err, 'app cert for registry where not added into app login may fail.');
+                    console.log(err, 'app cert for registry where not added into app login may fail.');
                 }).then(function(res) {
                     p.resolve();
                 });
             } else {
-                $.console.warn(process.platform, 'no supported for cert install.');
+                console.log(process.platform, 'no supported for cert install.');
                 p.resolve();
             }
 

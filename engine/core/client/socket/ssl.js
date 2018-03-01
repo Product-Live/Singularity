@@ -60,7 +60,6 @@ $.require([
             });
             this._socket.setEncoding('utf8');
             this._socket.on('data', function(data) {
-                $.console.socketApi(data);
                 self._callback(data);
             });
             this._socket.on('closed', function() {

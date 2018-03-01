@@ -12,7 +12,7 @@ $.require([
     var obj = function(path) {
         this._path = ($.is.array(path)) ? path : [path];
         this._watch = [];
-        $.console.debug($.color.cyan('--\tDev Watcher running\t--'));
+        console.log($.color.cyan('--\tDev Watcher running\t--'));
         for (var i in this._path) {
             this.load($.path(this._path[i]));
         }
@@ -46,7 +46,7 @@ $.require([
         },
         
         close: function(filename) {
-            $.console.debug($.color.cyan('--\tfile change reload app\t--'), filename);
+            console.log($.color.cyan('--\tfile change reload app\t--'), filename);
             for (var i in this._watch) {
                 this._watch[i].close();
             }

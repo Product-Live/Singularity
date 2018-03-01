@@ -56,7 +56,7 @@ $.require([
             if ((!$.defined(registry) || registry.isLocal) && !force)  {
                 this._staticRegistry.login = true;
                 this._staticRegistry.local = true;
-                $.console.warn('no registry given will work with a local version.');
+                console.log('no registry given will work with a local version.');
                 return ($.promise().resolve(true));
             }
 
@@ -69,7 +69,7 @@ $.require([
                     self._staticRegistry.local = true;
                     self._staticRegistry.login = false;
                     registry.password = '****'; // stop the password being written into a log file
-                    $.console.error('tryed to login to registry but failed with info now going local.')(registry)(res.err);
+                    console.log('tryed to login to registry but failed with info now going local.')(registry)(res.err);
                     return (false);
                 }
                 self._staticRegistry.local = false;
@@ -108,7 +108,7 @@ $.require([
                 return (bash.run('docker push ' +  registry.address + '/' + _.version(image), env, true));
             }).then(function(res) {
                 if (res.err.length != 0) {
-                    $.console.warn('Failed to pull image building from local.');
+                    console.log('Failed to pull image building from local.');
                     return ($.promise().reject());
                 }
 
@@ -139,7 +139,7 @@ $.require([
                 return (p);
             }
 
-            $.console.debug('trying to pull', image);
+            console.log('trying to pull', image);
             return (this._loadEnv().then(function(e) {
                 cd({info: 'pulling image "' + path + '" pull progress key "' + key + '"'});
                 self._pull[path] = {
@@ -158,7 +158,7 @@ $.require([
                 }));
             }).then(function(res) {
                 if (res.err.length != 0) {
-                    $.console.warn('Failed to pull image building from local.');
+                    console.log('Failed to pull image building from local.');
                     return ($.promise().reject(res.error));
                 }
 

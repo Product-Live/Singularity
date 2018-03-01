@@ -197,7 +197,7 @@ $.require([
             }
 
             if (this._core._currentRun != this._core._runCommand()) {
-                $.console.docker('command match failed', this._core._currentRun + '\n' + this._core._runCommand());
+                console.log('command match failed', this._core._currentRun + '\n' + this._core._runCommand());
                 return ({error: 'The start up commands do not match up with the map.'});
             }
             return (true);

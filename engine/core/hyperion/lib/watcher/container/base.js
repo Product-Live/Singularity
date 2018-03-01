@@ -103,7 +103,7 @@ $.require([
          */
         _create: function(env) {
             this._currentRun = this._runCommand();
-            $.console.docker('-- creating container with name', this._container().key, 'command', this._currentRun);
+            console.log('-- creating container with name', this._container().key, 'command', this._currentRun);
             this._containerUpdate({status: 'starting'});
             return (bash.run(this._currentRun, env));
         },

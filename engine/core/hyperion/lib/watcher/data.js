@@ -140,7 +140,7 @@ $.require([
             if ($.defined(type) && this._type[type]) {
                 var t = this._type[type];
 
-                $.console.log($.color.cyan(err));
+                console.log($.color.cyan(err));
                 t.disable(key, {report: err, time: $.time.now().get}).then(function () {
                     return (self._core.pause());
                 }, function () {
@@ -192,10 +192,10 @@ $.require([
                 }, function(err) {
                     p.reject(err);
                 }).then(function() {
-                    $.console.warn('--- get', data.container);
+                    console.log('--- get', data.container);
                     return (self._updateMap(data))
                 }, function(err) {
-                    $.console.warn('--- get err', err);
+                    console.log('--- get err', err);
                     p.reject(err);
                 }).then(function(res) {
                     p.resolve(res);
@@ -213,7 +213,7 @@ $.require([
             if ($.defined(type) && this._type[type]) {
                 var t = this._type[type];
 
-                $.console.warn('--- set', data);
+                console.log('--- set', data);
                 t.set(key, data).then(function() {
                     return (self._valid(t, key, data));
                 }, function (err) {
@@ -221,7 +221,7 @@ $.require([
                 }).then(function () {
                     return (self._updateMap(data))
                 }, function (err) {
-                    $.console.warn('--- get err', err);
+                    console.log('--- get err', err);
                     p.reject(err);
                 }).then(function (res) {
                     p.resolve(res);

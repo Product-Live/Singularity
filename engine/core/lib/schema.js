@@ -125,7 +125,7 @@ obj.prototype = {
 			try {
 				return (this.merge().deep((new copy(obj)).copy, m));
 			} catch (e) {
-				$.console.error(e);
+				console.log(e);
 			}
 			return (null);
 		});

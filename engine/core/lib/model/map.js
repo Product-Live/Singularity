@@ -79,7 +79,7 @@ $.require([
 				if (this._name != name) {
 					if ($.defined(_list[name])) {
 						_list[name] += 1;
-						$.console.warn('model:', 'models with same name found count:', _list[name], 'on name', name);
+						console.log('model:', 'models with same name found count:', _list[name], 'on name', name);
 					} else {
 						_list[name] = 0;
 					}

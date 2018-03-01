@@ -33,7 +33,7 @@ $.require([
                 fd = res;
                 res.write($.json.encode(data) + '\n', function(err) {
                     if (err) {
-                        $.console.warn('logs where not saved', err);
+                        console.log('logs where not saved', err);
                         p.reject();
                     } else {
                         p.resolve();

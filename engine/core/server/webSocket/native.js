@@ -23,7 +23,7 @@ $.require([
         _close: function(wrapper) {
             var id = wrapper.id();
             delete this._clients[id];
-            //$.console.log($.color.yellow(id + " disconnected "));
+            //console.log($.color.yellow(id + " disconnected "));
             wrapper.close();
         },
 

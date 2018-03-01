@@ -85,7 +85,7 @@ $.require([
                         }
                     }
                     //console.log('No routes matched', this._route);
-                    //$.console.log($.color.red("No routes matched.", this._route));
+                    //console.log($.color.red("No routes matched.", this._route));
                     return ($.promise().reject(new Error('no routes matched.')));
                 } else {
                     return (this._hasRoute(map[this['_' + this._order[i]]], param, i + 1));

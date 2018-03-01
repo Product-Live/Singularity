@@ -20,7 +20,7 @@ $.require([
                 return (self._bash('docker volume ls -q' + ((dangling) ? 'f dangling=true' : ''), e, true));
             }).then(function(res) {
                 if (res.err.length != 0) {
-                    $.console.warn('Failed to ls volumes.');
+                    console.log('Failed to ls volumes.');
                     return ($.promise().reject());
                 }
 
@@ -41,7 +41,7 @@ $.require([
                 return (self._bash('docker volume inspect ' + _.version(volume), e, true));
             }).then(function(res) {
                 if (res.err.length != 0) {
-                    $.console.warn('Failed to ls volumes.');
+                    console.log('Failed to ls volumes.');
                     return ($.promise().reject());
                 }
 
