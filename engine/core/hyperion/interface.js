@@ -31,6 +31,7 @@ $.require([
             var b = build.get(name);
             if (b) {
                 return (this.build(config, true).then(function() {
+					console.log(self.registry.isLocal());
                     if (!self.registry.isLocal()) {
                         return (self.registry.push(name + ':' + config.version));
                     }
@@ -119,7 +120,7 @@ $.require([
                 var watch = new watcher(self);
                 console.log('init watcher with config', self._config);
                 watch.set(self._config);
-                
+
                 var timeout = setTimeout(function() {
                     console.log('skip fetch map from remote');
                     watch.startUp();

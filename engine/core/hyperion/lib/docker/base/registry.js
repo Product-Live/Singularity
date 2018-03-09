@@ -48,6 +48,7 @@ $.require([
          */
         login: function(force) {
             var self = this, registry = $.schema.copy($.config.get('docker.registry')) || {};
+            registry = ($.is.array(registry)) ? registry : [registry];
 
             if (this._staticRegistry.login) {
                 return ($.promise().resolve(true));
@@ -60,16 +61,28 @@ $.require([
                 return ($.promise().resolve(true));
             }
 
-            return (this._loadEnv().then(function(env) { // if login fails because the server is down that will create a long load
-                //return (bash.run('docker login -e none -u ' + registry.user + ' -p ' + registry.password + ' ' + registry.address, env, true));
-                return (bash.run('docker login -u ' + registry.user + ' -p ' + registry.password + ' ' + registry.address, env, true));
+            return (this._loadEnv().then(function(env) {
+                let wait = [];
+                for (let i in registry) {
+                    wait.push(bash.run('docker login -u ' + registry[i].user + ' -p ' + registry[i].password + ' ' + registry[i].address, env, true).then((res) => {
+                        if (res.out.length == 0 || res.out.join('\n').indexOf('Login Succeeded') == -1) {
+                            return (false);
+                        }
+                        return (true);
+                    }));
+                }
+                return $.all(wait);
             }).then(function(res) {
-                console.log(res);
-                if (res.out.length == 0 || res.out.join('\n').indexOf('Login Succeeded') == -1) { // if error go local
+                let loggedin = true;
+                for (let i in res) {
+                    if (!res[i]) {
+                        loggedin = false;
+                    }
+                }
+                if (!loggedin) {
                     self._staticRegistry.local = true;
                     self._staticRegistry.login = false;
-                    registry.password = '****'; // stop the password being written into a log file
-                    console.log('tryed to login to registry but failed with info now going local.')(registry)(res.err);
+                    registry.password = '****';
                     return (false);
                 }
                 self._staticRegistry.local = false;
@@ -84,9 +97,14 @@ $.require([
          */
         logout: function() {
             var self = this, registry = $.config.get('docker.registry');
+            registry = ($.is.array(registry)) ? registry : [registry];
 
             return (this._loadEnv().then(function(env) {
-                return (bash.run('docker logout ' + registry.address, env, true));
+                let wait = [];
+                for (let i in registry) {
+                    wait.push(bash.run('docker logout ' + registry.address, env, true));
+                }
+                return $.all(wait);
             }).then(function() {
                 self._staticRegistry.login = false;
                 return (true);
@@ -101,18 +119,32 @@ $.require([
          */
         push: function(image) {
             var self = this, registry = $.config.get('docker.registry'), env = null;
+            registry = ($.is.array(registry)) ? registry : [registry];
+
+            console.log('here');
 
             return (this._loadEnv().then(function(e) {
-                return (bash.run('docker tag ' + image + ' ' +  registry.address + '/' + image, (env = e), true));
-            }).then(function() {
-                return (bash.run('docker push ' +  registry.address + '/' + _.version(image), env, true));
-            }).then(function(res) {
-                if (res.err.length != 0) {
-                    console.log('Failed to pull image building from local.');
-                    return ($.promise().reject());
+                        console.log('here1');
+                let wait = [];
+                for (let i in registry) {
+                    wait.push(bash.run('docker tag ' + image + ' ' +  registry[i].address + '/' + image, (env = e), true));
                 }
-
-                //TODO: the pulled image may need a rename or link
+                return $.all(wait);
+            }).then(function() {
+                        console.log('here2');
+                let wait = [];
+                for (let i in registry) {
+                    wait.push(bash.run('docker push ' +  registry[i].address + '/' + _.version(image), env, true));
+                }
+                return $.all(wait);
+            }).then(function(res) {
+                        console.log('here3');
+                for (let i in res) {
+                    if (res[i].err.length != 0) {
+                        console.log('Failed to pull image building from local.');
+                        return ($.promise().reject());
+                    }
+                }
                 return (true);
             }));
         },
@@ -126,6 +158,8 @@ $.require([
          */
         pull: function(image, cd) { // TODO: bug here does not pull
             var self = this, registry = $.config.get('docker.registry'), env, out = {};
+            registry = ($.is.array(registry)) ? registry[0] : registry;
+
             var path = registry.address + '/' + _.version(image), key = $.key.random();
             cd = ($.is.function(cd)) ? cd : function() {};
 
