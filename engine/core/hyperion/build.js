@@ -48,9 +48,10 @@ $.require([
     action.prototype = {
         setup: function(data) {
             if (this._wrap._func) {
-                return (this._wrap._func(data));
+                let p = this._wrap._func(data);
+                return ($.is.object(p) && $.is.function(p.then)) ? p : $.promise().resolve();
             }
-            return($.promise().resolve());
+            return $.promise().resolve();
         },
 
         toString: function() {
