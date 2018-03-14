@@ -276,7 +276,11 @@ $.require([
                     console.log(cmd);
                     return (bash.raw(cmd, {/*cwd: b.path(),*/ env: env}, true));
                 }).then(function(res) {
-                    p.resolve(res);
+                    if (res.code == 0) {
+                        p.resolve(res);
+                    } else {
+                        p.reject(res);
+                    }
                 }, function(e) {
                     p.reject(e);
                 });

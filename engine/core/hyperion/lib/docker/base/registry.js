@@ -121,24 +121,19 @@ $.require([
             var self = this, registry = $.config.get('docker.registry'), env = null;
             registry = ($.is.array(registry)) ? registry : [registry];
 
-            console.log('here');
-
             return (this._loadEnv().then(function(e) {
-                        console.log('here1');
                 let wait = [];
                 for (let i in registry) {
                     wait.push(bash.run('docker tag ' + image + ' ' +  registry[i].address + '/' + image, (env = e), true));
                 }
                 return $.all(wait);
             }).then(function() {
-                        console.log('here2');
                 let wait = [];
                 for (let i in registry) {
                     wait.push(bash.run('docker push ' +  registry[i].address + '/' + _.version(image), env, true));
                 }
                 return $.all(wait);
             }).then(function(res) {
-                        console.log('here3');
                 for (let i in res) {
                     if (res[i].err.length != 0) {
                         console.log('Failed to pull image building from local.');

@@ -36,6 +36,8 @@ $.require([
                         return (self.registry.push(name + ':' + config.version));
                     }
                     return ($.promise().reject(new Error('Can\'t release a image without a registry')));
+                }, function() {
+                	return ($.promise().reject('failed to build image'));
                 }));
             }
 
