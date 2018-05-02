@@ -154,8 +154,32 @@ $.require([
          * @param  {[type]} path [description]
          * @return {[type]}      [description]
          */
-        list: function(path) {
-            return (fs.readDir($.path(path)));
+        list: function(path, all) {
+            if (all) {
+                var self = this;
+                return fs.stat(path).then((stat) => {
+                    if (stat.isDirectory()) {
+                        return fs.readDir(path).then((res) => {
+                            var wait = [];
+                            for (var i in res) {
+                                wait.push(self.list(path + '/' + res[i], all));
+                            }
+                            return $.all(wait);
+                        }).then((res) => {
+                            let out = [];
+                            for (let i in res) {
+                                out = out.concat(res[i]);
+                            }
+                            return out;
+                        });
+                    } else {
+                        return [path];
+                    }
+                }, (err) => {
+                    return $.promise().reject(err);
+                });
+            }
+            return fs.readDir($.path(path));
         },
 
         /**

@@ -107,7 +107,7 @@ $.require([
         _loadConfig: function(name) {
             var basePath = path.get(name);
             var type = $.require(basePath + '/config.js');
-            
+
             if ($.is.function(type)) {
                 type = type(modelRoute, modelImport, modelCdn);
             }
@@ -221,18 +221,19 @@ $.require([
          * @param modules
          */
         load: function(modules) {
-            var self = this, next = function(i) {
-                if ($.defined(modules[i])) {
-                    return (self.map(modules[i], [], true).then(function() {
-                        return (next(i + 1));
-                    }));
-                } else {
-                    return ($.promise().resolve());
-                }
-            };
-            return (path.load().then(function() {
-                return (next(0));
-            }));
+            return path.load(modules).then(() => {
+                const next = (i) => {
+                    if ($.defined(modules[i])) {
+                        return this.map(modules[i], [], true).then(() => {
+                            return next(i + 1);
+                        });
+                    } else {
+                        return $.promise().resolve();
+                    }
+                };
+
+                return next(0);
+            });
         }
     });
 

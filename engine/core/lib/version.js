@@ -11,6 +11,7 @@ obj.prototype = {
         }
         return (a);
     },
+    
     great: function(v) {
         var tmp = this._parse(v);
         for (var i = 0; i < this._version.length; i++) {
@@ -22,6 +23,7 @@ obj.prototype = {
         }
         return (true);
     },
+
     less: function(v) {
         var tmp = this._parse(v);
         for (var i in this._version) {
@@ -31,6 +33,7 @@ obj.prototype = {
         }
         return (true);
     },
+
     equal: function(v) {
         var tmp = this._parse(v);
         for (var i in this._version) {

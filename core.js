@@ -109,6 +109,10 @@ module.exports = function(bootstrap) {
             conf.upstartWrap = false;
         });
 
+        c.if('purge', function () {
+            conf.purgeNPM = true;
+        });
+
         if ($.is.function(bootstrap.command)) {
             if (bootstrap.command(c, conf)) {
                 return;
