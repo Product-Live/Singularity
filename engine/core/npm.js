@@ -69,7 +69,7 @@ $.require([
         install: function() {
             var wait = [], report = {}, install = false, self = this, skip = $.config.get('module.purgeNPM');
 
-            if (skip) {
+            if (!skip) {
                 for (let i in this._package.dependencies) {
                     ((i) => {
                         if (i === '') {
