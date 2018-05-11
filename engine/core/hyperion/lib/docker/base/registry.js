@@ -54,7 +54,7 @@ $.require([
                 return ($.promise().resolve(true));
             }
 
-            if ((!$.defined(registry) || registry.isLocal) && !force)  {
+            if ($.config.get('docker.env.isLocal'))  {
                 this._staticRegistry.login = true;
                 this._staticRegistry.local = true;
                 console.log('no registry given will work with a local version.');
