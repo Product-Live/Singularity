@@ -58,7 +58,7 @@ $.require([
                     return (self._initShell((retry || 0) + 1));
                 }
                 console.log('shell is loaded');
-                self._cache.shellEnv = env;
+                self._cache.shellEnv = env || {};
                 return (env);
             }));
         },

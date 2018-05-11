@@ -10,7 +10,7 @@ $.require([
     obj.prototype = {
         _staticEnv: {
             envReady: false,
-            env: null // this can maybe be a static version of the env created
+            env: {} // this can maybe be a static version of the env created
         },
 
         /**
