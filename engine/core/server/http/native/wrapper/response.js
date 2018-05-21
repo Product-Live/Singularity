@@ -50,10 +50,10 @@ $.require([
         set: function(field, value) {
             if ($.is.object(field)) {
                 for (var i in field) {
-                    this._head[i] = field[i];
+                    this._head[i.toLowerCase()] = field[i];
                 }
             } else {
-                this._head[field] = value;
+                this._head[field.toLowerCase()] = value;
             }
             return (this);
         },
@@ -207,7 +207,7 @@ $.require([
             stream.pipe(this._res);
             return (this);
         },
-        
+
         raw: function(body) {
             return (this.send(body));
         }
