@@ -77,6 +77,9 @@ $.require([
          * @returns {*}
          */
         data: function() {
+            if (this._req.headers && this._req.headers['content-type'].match('json') && $.is.array(this._body.parsed)) {
+                return this._body.parsed;
+            }
             var data = {}, query = url.parse(this._req.url, true).query;
 
             for (var i in query) {

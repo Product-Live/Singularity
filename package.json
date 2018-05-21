@@ -18,5 +18,19 @@
     ],
     "homepage": "http://www.singularity-js.com",
     "author": "anzerr",
-    "license": "Apache License 2.0"
+    "license": "Apache License 2.0",
+    "jshintConfig": {
+        "esversion": 6,
+        "undef": true,
+        "unused": true,
+        "nocomma": true,
+        "globalstrict": false,
+        "strict": true,
+        "node": true,
+        "predef": ["$", "appRoot"],
+        "globals": {
+            "$": true,
+            "appRoot": true
+        }
+    }
 }
