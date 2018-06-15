@@ -18,17 +18,13 @@ $.require([
     obj.prototype = $.extends('!base', {
         _getConfig: function(res) {
             try {
-                var d = res.replace(/[\r\n\t\s]/g, ''), out = {};
-                var pattern = /module\.exports=function\(\){return\(?(.+?)\)?;};/m;
-                var match = pattern.exec(d), sandbox = {config: {}};
-                if (match) {
-                    vm.createContext(sandbox);
-                    vm.runInContext('var config = ' + match[1], sandbox);
-                }
-
+                var d = res.replace(/[\r\n]/g, '').replace(/\t/g, ' '), out = {};
+                let sandbox = {config: {}};
+                vm.createContext(sandbox);
+                vm.runInContext(d.replace(/module\.exports/, 'var config = {}, _ ') + ';config = _();', sandbox);
                 return (sandbox.config || {});
             } catch(e) {
-                throw e;
+                //
             }
             return ({});
         },
